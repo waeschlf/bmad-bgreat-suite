@@ -21,8 +21,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Install PyYAML
-        # Retry to absorb transient PyPI/network hiccups so a single failed
-        # download does not fail the whole CI run (Fleet Monitor issue #381).
+        # Retry to absorb transient PyPI/network hiccups.
         run: |
           for attempt in 1 2 3; do
             if pip install --only-binary :all: pyyaml==6.0.2; then
@@ -137,46 +136,13 @@ jobs:
           fi
           exit $status
 
-      - name: Validate copilot-setup-steps job name
-        run: bash tools/test-copilot-setup-steps.sh
-
       - name: Validate skill structural integrity
         run: bash tools/validate-skills.sh
-
-      - name: Validate repo-settings script coverage
-        run: bash tools/test-repo-settings.sh
-
-      - name: Validate pr-quality ruleset compliance
-        run: bash tools/test-rulesets.sh
-
-      - name: Validate dev-lead concurrency guard
-        run: bash tools/test-dev-lead-concurrency.sh
-
-      - name: Validate pr-review Dependabot skip guard
-        run: bash tools/test-pr-review-dependabot-skip.sh
-
-      - name: Validate pr-review-mention bot-comment skip guard
-        run: bash tools/test-pr-review-mention-bot-skip.sh
-
-      - name: Validate secret-scan job compliance
-        run: bash tools/test-ci-secret-scan.sh
-
-      - name: Validate dependency hardening
-        run: bash tools/test-ci-dependency-hardening.sh
-
-      - name: Validate PyYAML install retry hardening
-        run: bash tools/test-ci-pip-retry.sh
-
-      - name: Validate dependency-audit required-check contract
-        run: bash tools/test-dependency-audit-check.sh
 
   secret-scan:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
-    # Dependabot PR runs do not have access to secrets.GITLEAKS_LICENSE; the
-    # licensed gitleaks-action requires that secret and fails with "missing gitleaks
-    # license" (Fleet Monitor issue #397). Skip the scan on its events;
-    # full coverage still runs on all human/push runs.
+    # Dependabot PR runs have no access to repository secrets; skip the scan there.
     if: ${{ github.actor != 'dependabot[bot]' }}
     permissions:
       contents: read

@@ -1,12 +1,12 @@
 {
-  "name": "bmad-bgreat-suite",
+  "name": "agentic-sre",
   "version": "0.1.0",
-  "description": "BMad BGreat Suite — SRE and DevOps agents and workflows for the BMad Method ecosystem",
-  "author": "Don Petry",
+  "description": "AgenticSRE — SRE, DevOps and Security agents and workflows for the BMad Method ecosystem (fork of bmad-bgreat-suite)",
+  "author": "Florian Waeschle",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/petry-projects/bmad-bgreat-suite"
+    "url": "https://github.com/waeschlf/bmad-bgreat-suite"
   },
   "keywords": [
     "bmad",

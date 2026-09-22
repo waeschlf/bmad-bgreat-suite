@@ -1,19 +1,21 @@
-# BMad BGreat Suite — Agent Development Standards
+# AgenticSRE — Agent Development Standards
 
-> Extends the org-level standards at [petry-projects/.github/AGENTS.md](https://github.com/petry-projects/.github/blob/main/AGENTS.md).
-> This file defines project-specific conventions for the BGreat Suite module.
+> This file defines project-specific conventions for the AgenticSRE module
+> (a fork of [petry-projects/bmad-bgreat-suite](https://github.com/petry-projects/bmad-bgreat-suite)).
 
 ## Project Overview
 
-The BMad BGreat Suite is a BMAD Method extension module providing three
-specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and eight
-guided workflows for production readiness planning. The codebase is
+AgenticSRE is a BMAD Method extension module providing three
+specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security), ten
+guided workflows for production readiness planning, and a cross-agent
+operations review skill. The codebase is
 content-only: markdown workflow definitions, YAML configuration, and
 output templates.
 
 - **Type:** BMAD Method extension module (content-only: markdown + YAML)
 - **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
-- **Workflows:** 8 guided workflows for production readiness planning
+- **Workflows:** 10 guided workflows for production readiness planning
+- **Skills:** `bgr-ops-review` cross-agent operations review
 - **Output:** Planning artifacts saved to `{bgr_artifacts}/` directory
 
 ### Key Files
@@ -22,6 +24,7 @@ output templates.
 - `src/module-help.csv` — Complete skill registry with dependencies
 - `src/agents/` — Agent persona definitions
 - `src/workflows/` — Guided multi-step workflows
+- `src/skills/` — Standalone skills (operations review)
 
 ## Repository Structure
 
@@ -35,6 +38,7 @@ src/
 │       ├── workflow.md           # Orchestrator
 │       ├── steps/                # Sequential step files
 │       └── templates/            # Output document templates
+├── skills/           # Standalone skills (bgr-ops-review)
 ├── templates/        # Shared templates (production readiness checklist)
 ├── module.yaml       # Module configuration
 └── module-help.csv   # Skill registry
@@ -70,6 +74,7 @@ src/
 - New agents must be added to module-help.csv with correct phase, dependencies, and menu code
 - New workflows must specify `after:` dependencies accurately
 - Module.yaml must reflect the correct agent/workflow counts
+- New skills must be listed in `.claude-plugin/marketplace.json`
 
 ### Security
 
@@ -81,8 +86,7 @@ src/
 ## CI Checks
 
 All PRs must pass:
-- **CI Validate** — YAML validation, module structure, module-help.csv consistency
-- **AgentShield** — Agent config security (secrets scan, permission bypass detection, frontmatter validation)
-- **CodeQL** — SAST scanning for GitHub Actions
-- **SonarCloud** — Code quality analysis
-- **Claude Code** — AI-assisted PR review
+- **CI Validate** — YAML validation, module structure, module-help.csv consistency, `tools/validate-skills.sh`
+- **Secret scan** — gitleaks over full history
+
+Run `bash tools/validate-skills.sh` locally before pushing.

@@ -1,8 +1,8 @@
-# Contributing to BMad BGreat Suite
+# Contributing to AgenticSRE
 
 ## Overview
 
-The BMad BGreat Suite is a BMAD Method extension module providing specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and seven guided workflows for production readiness planning. The codebase is content-only: markdown workflow definitions, YAML configuration, and output templates.
+AgenticSRE is a BMAD Method extension module providing specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security) and ten guided workflows for production readiness planning. The codebase is content-only: markdown workflow definitions, YAML configuration, and output templates.
 
 ## Architecture
 
@@ -45,6 +45,7 @@ After creating files:
 1. Update `src/module.yaml` description and subheader workflow count
 2. Update `src/module-help.csv` with a new entry (unique 2-char menu code)
 3. Update `AGENTS.md` workflow count
+4. Add the skill path to `.claude-plugin/marketplace.json`
 
 ## Adding a New Agent
 
@@ -90,7 +91,7 @@ crossWorkflowContext: []     # cross-workflow references (allowed empty)
 
 | Field | Description |
 |-------|-------------|
-| `module` | Always `BGreat Suite` |
+| `module` | Always `AgenticSRE` |
 | `skill` | Skill ID (e.g., `bgr-3-create-observability`) |
 | `display-name` | Human-readable name |
 | `menu-code` | Unique 2-character code (e.g., `CO`, `CR`) |
@@ -123,7 +124,7 @@ crossWorkflowContext: []     # cross-workflow references (allowed empty)
 
 - Read 2+ existing reference workflows before writing new ones
 - Follow all naming conventions and structural patterns documented above
-- Run `bash tools/validate-skills.sh` before submitting (added in PR #66)
+- Run `bash tools/validate-skills.sh` before submitting
 - AI-generated contributions receive the same review scrutiny as human contributions
 
 ## PR Checklist
@@ -132,6 +133,7 @@ crossWorkflowContext: []     # cross-workflow references (allowed empty)
 - [ ] `module.yaml` counts and description updated
 - [ ] `module-help.csv` entry added with unique 2-char menu code
 - [ ] `AGENTS.md` counts updated
+- [ ] `.claude-plugin/marketplace.json` lists the new skill
 - [ ] Production readiness checklist template updated (if adding a workflow)
 - [ ] Step files follow naming convention and include all required sections
 - [ ] Templates include required frontmatter fields (`status`, `stepsCompleted`, `createdDate`, `lastUpdated`)

@@ -1,6 +1,12 @@
-# BMad BGreat Suite
+# AgenticSRE
 
-Additional agents to extend the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
+SRE, DevOps and Security agents for the [BMad Method](https://github.com/bmad-code-org/BMAD-METHOD) ecosystem.
+
+> Fork of [petry-projects/bmad-bgreat-suite](https://github.com/petry-projects/bmad-bgreat-suite).
+> Goal: extend the upstream production-readiness planning workflows with live operations
+> workflows (incident triage, postmortem, problem and change management, on-call handoff)
+> that work against real observability and ticketing tools via MCP.
+> Module code `bgr` and skill IDs are kept unchanged so upstream changes can still be merged.
 
 Three specialized agents — **Morgan** (SRE Lead), **Riley** (DevOps Lead), and **Sam** (Security Lead) — with ten guided workflows and a cross-agent operations review that produce production-readiness artifacts alongside your architecture planning.
 
@@ -53,15 +59,22 @@ Multiple tracks can run in parallel after the architecture is defined.
 ### As a custom module (local path)
 
 ```bash
-npx bmad-method install --custom-content /path/to/bmad-bgreat-suite/src
+npx bmad-method install --custom-content /path/to/AgenticSRE/src
 ```
 
-### As an npm package (once published)
+### As a Claude Code plugin
 
 ```bash
-npm install bmad-bgreat-suite
+/plugin marketplace add waeschlf/bmad-bgreat-suite
+/plugin install agentic-sre
+```
+
+### As an npm package (not published yet)
+
+```bash
+npm install agentic-sre
 npx bmad-method install
-# Select "BMad BGreat Suite" from the module list
+# Select "AgenticSRE" from the module list
 ```
 
 ## Configuration
@@ -124,6 +137,9 @@ src/
     bgr-3-create-capacity-plan/
     bgr-3-create-cost-optimization-plan/
     bgr-3-create-security-plan/
+  skills/
+    bgr-ops-review/        # Cross-agent operations review
+  templates/               # Shared production readiness checklist
 ```
 
 Each workflow follows BMAD's micro-file architecture: a `workflow.md` orchestrator, sequential `steps/` for guided discovery, and `templates/` for output documents.
@@ -136,7 +152,9 @@ Each workflow follows BMAD's micro-file architecture: a `workflow.md` orchestrat
 
 ## Attribution
 
-This module incorporates ideas from these MIT-licensed projects in the BMad ecosystem:
+Forked from [petry-projects/bmad-bgreat-suite](https://github.com/petry-projects/bmad-bgreat-suite) by Don Petry (MIT).
+
+The upstream module incorporates ideas from these MIT-licensed projects in the BMad ecosystem:
 
 - [Ricoledan/bmad-architecture-agent](https://github.com/Ricoledan/bmad-architecture-agent) — Platform Engineering expansion pack patterns (agent "Sam")
 - [bacoco/BMad-Skills](https://github.com/bacoco/BMad-Skills) — Observability readiness skill structure and reference patterns
@@ -145,9 +163,11 @@ This module incorporates ideas from these MIT-licensed projects in the BMad ecos
 
 Contributions welcome. This module is designed to grow — new agents and workflows can be added following the patterns in `src/agents/` and `src/workflows/`.
 
-1. Fork the repo
-2. Create a feature branch
-3. Follow existing conventions (SKILL.md, bmad-skill-manifest.yaml, workflow.md, steps/)
+See [CONTRIBUTING.md](./CONTRIBUTING.md). In short:
+
+1. Create a feature branch
+2. Follow existing conventions (SKILL.md, bmad-skill-manifest.yaml, workflow.md, steps/)
+3. Run `bash tools/validate-skills.sh`
 4. Submit a PR with a clear description
 
 ## License
