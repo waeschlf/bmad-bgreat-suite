@@ -1,5 +1,6 @@
 ---
 status: draft                 # draft | review-ready | complete | approved
+interim: false                # true while the incident is still ongoing
 stepsCompleted: []
 lastStep: ""
 incidentId: ""
@@ -55,6 +56,11 @@ inputDocuments: []
 | Time to mitigate (onset -> mitigation) | | |
 | Time to resolve (onset -> resolution) | | |
 
+## Corrections to the Triage Record
+
+| Item | Triage said | Verified | Evidence |
+|------|-------------|----------|----------|
+
 ## Hypotheses Resolved
 
 | # | Hypothesis (from triage) | Outcome | Deciding evidence |
@@ -88,6 +94,18 @@ inputDocuments: []
 
 | Gap | Planning workflow |
 |-----|-------------------|
+
+## Unrelated Issues Found
+
+> Problems discovered during the analysis that existed before the trigger or have a different cause. Raised separately; not counted as incident impact.
+
+| Issue | Evidence | Follow-up / ticket |
+|-------|----------|--------------------|
+
+## Existing Tickets
+
+| System | ID | What it covers | Relation to this incident |
+|--------|----|----------------|---------------------------|
 
 ## Open Questions for Review
 

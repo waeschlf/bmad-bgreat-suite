@@ -32,20 +32,30 @@ Identify the incident, gather every existing record of it, choose the mode, and 
 
 From the user's message, get the incident ID, or search `{bgr_incidents}/*/triage.md` for recent records and let the user pick. If the incident lives only in an external incident or paging tool, fetch it from there (read-only) and derive `incident_id` from its ID.
 
-### 2. Check for an Existing Postmortem
+### 2. Check the Incident Is Over
+
+A postmortem needs a mitigated incident. Check the triage record's `status` and, if the evidence source is available, re-run its key impact query for the last hour (read-only):
+
+- **Mitigated or resolved**: continue
+- **Still ongoing**: tell the user plainly, with the current numbers, and offer:
+  - [T] Go back to triage (`bgr-4-incident-triage`, mitigation step) - recommended
+  - [I] Continue with an **interim** draft: set frontmatter `interim: true`, add a banner at the top of the document, and treat mitigation and resolution milestones as open
+
+### 3. Check for an Existing Postmortem
 
 Look for `{bgr_incidents}/{incident_id}/postmortem.md`:
 
 - If it exists with `stepsCompleted` containing numbers (i.e. this workflow already ran), **STOP here** and load `./step-01b-continue.md`
-- If it exists as a stub from triage (`stepsCompleted: []`), keep it; its content is upgraded in section 5 below
+- If it exists as a stub from triage (`stepsCompleted: []`), keep it; its content is upgraded in section 6 below
 
-### 3. Load Inputs
+### 4. Load Inputs
 
 | Input | Where | What to extract |
 |-------|-------|-----------------|
 | Triage record | `{bgr_incidents}/{incident_id}/triage.md` | Signal, evidence table with sources, hypotheses, actions, status updates, timeline, planning gaps |
 | Postmortem stub | `{bgr_incidents}/{incident_id}/postmortem.md` | Pre-filled summary, timeline, impact |
 | External incident | incident / paging tool | Timeline, responders, severity, customer impact flags |
+| Existing tickets | every ticket or incident system available in this session | Incidents and defects already raised for the same service, dependency or error since the trigger (search by service name, dependency name and key error text). Link them; do not duplicate them |
 | Incident response plan | `{bgr_artifacts}/*incident-response*.md` | Postmortem process, severity definitions, action-item tracking rules, review cadence |
 | Observability plan | `{bgr_artifacts}/*observability*.md` | SLOs and error budgets for the affected service |
 | Other plans | `{bgr_artifacts}/*.md` | Plans the incident may reveal as wrong or incomplete (pipeline, capacity, DR, security) |
@@ -54,7 +64,7 @@ Use sharded-first discovery (`*foo*.md`, then `*foo*/index.md`). Track loaded fi
 
 If there is no triage record, tell the user the timeline will be reconstructed from the external tool and their input in step 2.
 
-### 4. Choose Mode and Participants
+### 5. Choose Mode and Participants
 
 Ask:
 
@@ -62,21 +72,23 @@ Ask:
 - **Postmortem owner** and **participants** (roles are enough; names optional)
 - **Review meeting date**, if scheduled
 
-### 5. Create or Upgrade the Document
+### 6. Create or Upgrade the Document
 
 Copy `../templates/postmortem-template.md` to `{bgr_incidents}/{incident_id}/postmortem.md`. If a stub existed, move its content into the matching sections of the full template first, then replace the file. Fill frontmatter: `incidentId`, `severity`, `service`, `mode`, `owner`, `participants`, `reviewDate`, `triageRecord`, `createdDate`, `lastUpdated`, `inputDocuments`.
 
-### 6. Report and Confirm
+### 7. Report and Confirm
 
 "Postmortem for **{incident_id}** set up at `{bgr_incidents}/{incident_id}/postmortem.md` ({mode} mode).
 
 **Inputs:** triage record {found / not found}, stub {found / not found}, external incident {found / not found}
+**Incident state:** {mitigated / resolved / ongoing - interim draft}
+**Existing tickets:** {IDs and what each covers, or 'none found'; systems not reachable: {list}}
 **Plans:** {incident response plan / observability plan / none}
 **Owner:** {owner} | **Review:** {reviewDate or 'not scheduled'}
 
 [C] Continue to timeline & impact"
 
-### 7. Handle Menu Selection
+### 8. Handle Menu Selection
 
 - **C**: set `stepsCompleted: [1]`, load `./step-02-timeline-impact.md`
 
@@ -86,11 +98,15 @@ Copy `../templates/postmortem-template.md` to `{bgr_incidents}/{incident_id}/pos
 ✅ Stub content preserved when upgrading to the full template
 ✅ Mode, owner and participants recorded
 ✅ Existing postmortem handed to step-01b
+✅ Incident state checked; ongoing incidents flagged and drafts marked interim
+✅ Existing tickets found and linked; unreachable ticket systems named
 
 ## FAILURE MODES:
 
 ❌ Starting a second postmortem for the same incident
 ❌ Discarding content from the triage stub
+❌ Writing a final postmortem for an incident that is still ongoing
+❌ Concluding "no ticket exists" when a ticket system was not reachable
 ❌ Beginning causal analysis before the timeline is verified
 
 ❌ **CRITICAL**: Reading only partial step file - leads to incomplete understanding and poor decisions

@@ -33,6 +33,7 @@ inputDocuments: []
 - **Detected at (UTC)**:
 - **Reporter**:
 - **Responders**:
+- **Existing tickets / incidents**:
 
 ## 2. Evidence
 

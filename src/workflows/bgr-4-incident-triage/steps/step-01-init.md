@@ -88,6 +88,10 @@ Determine which tools you can actually use in this session:
 
 If a tool is configured but unavailable, tell the user and fall back to asking them to paste query results. Record tool availability in frontmatter `toolAccess`.
 
+### 4b. Check Existing Tickets and Incidents
+
+Search every ticket or incident system available in this session (e.g. incident management, ITSM, defect tracker) for items raised since shortly before `detectedAt` on the same service, dependency or error text. Record matches in the record's Signal section with what each covers. Name any system that is not reachable; never conclude "nothing exists" from a system you could not query.
+
 ### 5. Create the Incident Record
 
 Copy `../templates/triage-record-template.md` to `{bgr_incidents}/{incident_id}/triage.md` and fill:
@@ -124,6 +128,7 @@ Anything to add before I pull evidence (other symptoms, suspected change, custom
 ✅ Existing record detected and handed to step-01b
 ✅ Incident response plan loaded, or defaults declared explicitly
 ✅ Tool access verified with a real read-only query, not assumed
+✅ Existing tickets and incidents searched and linked
 ✅ User confirmed intake
 
 ## FAILURE MODES:

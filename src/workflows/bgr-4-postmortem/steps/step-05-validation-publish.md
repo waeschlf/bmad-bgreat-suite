@@ -30,7 +30,9 @@ Validate the postmortem, write the executive summary, publish it to the agreed a
 **Facts:**
 - [ ] Timeline has all six milestones or open questions naming who will answer
 - [ ] Every timeline entry and impact number has a source
-- [ ] Impact measured at the user-facing layer; error budget impact stated
+- [ ] Impact measured at the user-facing layer against per-endpoint baselines; error budget impact stated
+- [ ] Corrections to the triage record listed
+- [ ] Existing tickets linked; unreachable ticket systems named
 
 **Analysis:**
 - [ ] Trigger, conditions, detection and response & recovery all analysed
@@ -72,6 +74,7 @@ Ask who receives it (engineering, stakeholders, customer-facing teams) and throu
 ### 6. Handle Menu Selection
 
 - **R**: fix and return to the menu
+- If `interim: true`, the status can be at most `review-ready`; finalise after mitigation
 - **C**: set `status` (`review-ready`, `complete`, or `approved` when the owner confirms sign-off), `stepsCompleted: [1, 2, 3, 4, 5]`, `lastUpdated`, `followUpDate`; stop
 
 ## SUCCESS METRICS:

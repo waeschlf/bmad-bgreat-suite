@@ -49,7 +49,9 @@ Triage often records onset from coarse buckets; refine with finer resolution now
 
 ### 3. Final Impact
 
-Quantify, at the user-facing layer:
+Quantify, at the user-facing layer, and compare **each endpoint or journey against its own pre-incident baseline**. Errors that were already present before the trigger are not incident impact; move them to "Unrelated Issues Found" with their evidence.
+
+Quantify:
 
 - Users, requests or transactions affected; affected journeys; duration
 - Error budget consumed per affected SLO (percentage of the period's budget)
@@ -61,11 +63,15 @@ Quantify, at the user-facing layer:
 
 Compute: time to detect (onset -> detection), time to respond (detection -> response), time to mitigate (onset -> mitigation), time to resolve (onset -> resolution). Compare against the incident response plan's targets if they exist.
 
-### 5. Collect Gaps
+### 5. Record Corrections to the Triage Record
+
+List every place where verified data differs from the triage record (timestamps, numbers, scope, attribution of impact) in the section "Corrections to the Triage Record", with the evidence. Triage is written under pressure; corrections are expected and must be visible, not silently overwritten.
+
+### 6. Collect Gaps
 
 Anything you cannot verify goes to "Open Questions for Review" with the role who can answer it.
 
-### 6. Present and Menu
+### 7. Present and Menu
 
 Show the timeline (key milestones highlighted), impact, metrics and open questions.
 
@@ -80,10 +86,10 @@ Show the timeline (key milestones highlighted), impact, metrics and open questio
 [C] Continue to causal analysis
 [R] Revise the timeline or impact"
 
-### 7. Handle Menu Selection
+### 8. Handle Menu Selection
 
 - **R**: adjust and return to the menu
-- **C**: write sections Timeline, Impact and Response Metrics, update `stepsCompleted`, load `./step-03-causal-analysis.md`
+- **C**: write sections Timeline, Impact, Response Metrics, Corrections to the Triage Record and Unrelated Issues Found, update `stepsCompleted`, load `./step-03-causal-analysis.md`
 
 ## SUCCESS METRICS:
 
@@ -91,11 +97,13 @@ Show the timeline (key milestones highlighted), impact, metrics and open questio
 ✅ All six milestones determined or listed as open questions
 ✅ Impact quantified at the user-facing layer, including degraded responses
 ✅ Response metrics computed and compared to targets
-✅ Triage approximations corrected with finer data
+✅ Triage approximations corrected with finer data and listed as corrections
+✅ Pre-existing errors separated from incident impact per endpoint
 
 ## FAILURE MODES:
 
 ❌ Copying triage numbers without re-verifying
+❌ Counting errors that existed before the trigger as incident impact
 ❌ Using the mitigation action time as the mitigation time
 ❌ Judgemental wording in the timeline ("failed to notice", "should have")
 

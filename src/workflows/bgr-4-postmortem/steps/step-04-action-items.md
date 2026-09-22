@@ -72,6 +72,8 @@ If `{bgr_ticket_system}` is not `none`:
 
 - If a skill exists for that ticket system, load and follow it for fields, severity mapping and routing
 - Draft every ticket: title, description (factor addressed, done criterion, link to the postmortem), priority, owner, due date, and a link to the incident's main defect if one exists
+- Before drafting, check the Existing Tickets section: extend or link an existing ticket instead of creating a duplicate
+- Draft separate tickets for Unrelated Issues Found; they are not action items of this incident
 - Show the drafts as a batch; create only the confirmed ones; record ticket IDs in the action table
 
 If the tool is unavailable, give the user the drafts to file manually.
