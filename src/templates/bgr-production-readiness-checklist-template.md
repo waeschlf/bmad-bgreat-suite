@@ -203,3 +203,10 @@ The following order maximizes context sharing between workflows:
 6. **Disaster Recovery Plan** -- Defines RTO/RPO targets and failover procedures that inform Infrastructure multi-region design
 7. **Capacity Planning** -- Defines growth models and scaling triggers that reference Observability metrics and Infrastructure auto-scaling
 8. **Cost Optimization Plan** -- References Capacity Planning for growth projections, Infrastructure for resource topology, and Observability for SLO-cost trade-offs
+
+## 6. Live Operations Log
+
+> Incidents triaged with `bgr-4-incident-triage`. Planning gaps found during incidents feed back into section 4.
+
+| Incident | Severity | Service | Status | Record |
+|----------|----------|---------|--------|--------|

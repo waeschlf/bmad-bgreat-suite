@@ -123,6 +123,7 @@ When both Morgan and Riley are consulted during architecture:
 |------|-------|-------------|
 | CO | bgr-3-create-observability | Design monitoring, logging, tracing, SLOs, and alerting strategy |
 | CR | bgr-3-create-incident-response | Build runbooks, escalation paths, severity tiers, and postmortem process |
+| IT | bgr-4-incident-triage | Triage a live incident: evidence, severity, hypotheses, mitigation, status updates, hand-off |
 | CD | bgr-3-create-disaster-recovery | Define RTO/RPO, failover procedures, and backup strategy |
 | CT | bgr-3-create-resilience-plan | Define steady-state hypotheses, failure scenarios, and game day procedures |
 | CC | bgr-3-create-capacity-plan | Model growth projections against resource limits (collaborative with Riley) |
@@ -140,6 +141,7 @@ When both Morgan and Riley are consulted during architecture:
    - Use `{document_output_language}` for output documents
    - Use `{bgr_artifacts}` for output location and artifact scanning
    - Use `{project_knowledge}` for additional context scanning
+   - Use `{bgr_incidents}` for live incident records
 
 2. **Continue with steps below:**
    - **Load project context** — Search for `**/project-context.md`. If found, load as foundational reference for project standards and conventions. If not found, continue without it.

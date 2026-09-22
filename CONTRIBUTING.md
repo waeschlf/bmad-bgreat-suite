@@ -28,7 +28,7 @@ src/
 
 ## Adding a New Workflow
 
-Every workflow lives in `src/workflows/bgr-3-<name>/` and requires:
+Every workflow lives in `src/workflows/bgr-<phase>-<name>/` (`bgr-3-` for planning, `bgr-4-` for live operations; see the live-operations rules in `AGENTS.md`) and requires:
 
 | File | Purpose |
 |------|---------|

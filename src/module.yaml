@@ -1,8 +1,8 @@
 code: bgr
 name: "AgenticSRE"
 header: "AgenticSRE — SRE, DevOps & Security for Production Readiness"
-subheader: "Configure reliability engineering, observability, infrastructure, security, and CI/CD workflows.\nAdds three specialized agents (Morgan the SRE Lead, Riley the DevOps Lead, Sam the Security Lead), ten guided workflows, and a cross-agent operations review skill."
-description: "SRE, DevOps, and Security agents with workflows for observability, incident response, disaster recovery, resilience testing, chaos engineering game days, infrastructure, capacity planning, cost optimization, CI/CD pipeline design, security planning, and cross-agent operations review"
+subheader: "Configure reliability engineering, observability, infrastructure, security, and CI/CD workflows, and triage live incidents.\nAdds three specialized agents (Morgan the SRE Lead, Riley the DevOps Lead, Sam the Security Lead), ten planning workflows, one live-operations workflow, and a cross-agent operations review skill."
+description: "SRE, DevOps, and Security agents with workflows for observability, incident response, disaster recovery, resilience testing, chaos engineering game days, infrastructure, capacity planning, cost optimization, CI/CD pipeline design, security planning, cross-agent operations review, and live incident triage"
 module_version: 0.1.0
 default_selected: false
 recommendedModules: [bmm]
@@ -70,14 +70,58 @@ container_orchestration:
     - value: "undecided"
       label: "Undecided"
 
+bgr_incidents:
+  prompt: "Where should live incident records be stored? (Triage records, status updates, postmortem stubs)"
+  default: "{output_folder}/bgr-incidents"
+  result: "{project-root}/{value}"
+
+bgr_observability_tool:
+  prompt: "Primary observability tool used as evidence source during incident triage?"
+  default: "datadog"
+  result: "{value}"
+  single-select:
+    - value: "datadog"
+      label: "Datadog"
+    - value: "grafana"
+      label: "Grafana stack (Prometheus / Loki / Tempo)"
+    - value: "newrelic"
+      label: "New Relic"
+    - value: "dynatrace"
+      label: "Dynatrace"
+    - value: "elastic"
+      label: "Elastic / OpenSearch"
+    - value: "cloud-native"
+      label: "Cloud provider native (CloudWatch, Cloud Monitoring, Azure Monitor)"
+    - value: "other"
+      label: "Other / manual (paste evidence)"
+
+bgr_ticket_system:
+  prompt: "Ticket system for incident follow-up defects?"
+  default: "jira"
+  result: "{value}"
+  single-select:
+    - value: "jira"
+      label: "Jira"
+    - value: "octane"
+      label: "OpenText ALM Octane"
+    - value: "servicenow"
+      label: "ServiceNow"
+    - value: "github"
+      label: "GitHub Issues"
+    - value: "linear"
+      label: "Linear"
+    - value: "none"
+      label: "None"
+
 directories:
   - "{bgr_artifacts}"
+  - "{bgr_incidents}"
 
 post-install-notes: |
   AgenticSRE installed successfully!
 
   Your agents:
-    Morgan (SRE Lead) — observability, incident response, disaster recovery, SLO/SLI, reliability
+    Morgan (SRE Lead) — observability, incident response, disaster recovery, SLO/SLI, reliability, live incident triage
     Riley (DevOps Lead) — infrastructure, CI/CD pipelines, capacity planning, cost optimization, deployment strategy
     Sam (Security Lead) — threat modeling, compliance mapping, security architecture
 

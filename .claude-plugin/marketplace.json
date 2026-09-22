@@ -39,7 +39,8 @@
         "./src/workflows/bgr-3-create-observability",
         "./src/workflows/bgr-3-create-pipeline",
         "./src/workflows/bgr-3-create-resilience-plan",
-        "./src/workflows/bgr-3-create-security-plan"
+        "./src/workflows/bgr-3-create-security-plan",
+        "./src/workflows/bgr-4-incident-triage"
       ]
     }
   ]

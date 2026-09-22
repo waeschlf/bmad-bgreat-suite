@@ -7,16 +7,16 @@
 
 AgenticSRE is a BMAD Method extension module providing three
 specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security), ten
-guided workflows for production readiness planning, and a cross-agent
-operations review skill. The codebase is
+guided workflows for production readiness planning, one live-operations
+workflow for incident triage, and a cross-agent operations review skill. The codebase is
 content-only: markdown workflow definitions, YAML configuration, and
 output templates.
 
 - **Type:** BMAD Method extension module (content-only: markdown + YAML)
 - **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
-- **Workflows:** 10 guided workflows for production readiness planning
+- **Workflows:** 10 planning workflows (`bgr-3-*`) and 1 live-operations workflow (`bgr-4-incident-triage`)
 - **Skills:** `bgr-ops-review` cross-agent operations review
-- **Output:** Planning artifacts saved to `{bgr_artifacts}/` directory
+- **Output:** Planning artifacts saved to `{bgr_artifacts}/`; live incident records saved to `{bgr_incidents}/{incident_id}/`
 
 ### Key Files
 
@@ -75,6 +75,14 @@ src/
 - New workflows must specify `after:` dependencies accurately
 - Module.yaml must reflect the correct agent/workflow counts
 - New skills must be listed in `.claude-plugin/marketplace.json`
+
+### Live-Operations Workflows (`bgr-4-*`)
+
+- Run against real systems through MCP tools; evidence gathering is proactive and read-only
+- Any write action (tickets, messages, monitor changes) requires explicit user confirmation of that specific action
+- Never execute production mitigations; propose exact actions with rollback and let the human execute
+- Every finding cites a re-runnable source; hypotheses are labelled as such
+- Tool-agnostic: select the evidence source via `{bgr_observability_tool}` and the ticket target via `{bgr_ticket_system}`; defer to an organisation-specific skill for the ticket system when one exists
 
 ### Security
 
