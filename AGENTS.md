@@ -7,14 +7,14 @@
 
 AgenticSRE is a BMAD Method extension module providing three
 specialized AI agents (Morgan/SRE, Riley/DevOps, Sam/Security), ten
-guided workflows for production readiness planning, two live-operations
-workflows (incident triage, postmortem), and a cross-agent operations review skill. The codebase is
+guided workflows for production readiness planning, three live-operations
+workflows (incident triage, postmortem, on-call handoff), and a cross-agent operations review skill. The codebase is
 content-only: markdown workflow definitions, YAML configuration, and
 output templates.
 
 - **Type:** BMAD Method extension module (content-only: markdown + YAML)
 - **Agents:** Morgan (SRE), Riley (DevOps), Sam (Security)
-- **Workflows:** 10 planning workflows (`bgr-3-*`) and 2 live-operations workflows (`bgr-4-incident-triage`, `bgr-4-postmortem`)
+- **Workflows:** 10 planning workflows (`bgr-3-*`) and 3 live-operations workflows (`bgr-4-incident-triage`, `bgr-4-postmortem`, `bgr-4-oncall-handoff`)
 - **Skills:** `bgr-ops-review` cross-agent operations review
 - **Output:** Planning artifacts saved to `{bgr_artifacts}/`; live incident records saved to `{bgr_incidents}/{incident_id}/`
 

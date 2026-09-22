@@ -41,6 +41,7 @@
         "./src/workflows/bgr-3-create-resilience-plan",
         "./src/workflows/bgr-3-create-security-plan",
         "./src/workflows/bgr-4-incident-triage",
+        "./src/workflows/bgr-4-oncall-handoff",
         "./src/workflows/bgr-4-postmortem"
       ]
     }

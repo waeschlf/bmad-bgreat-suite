@@ -125,6 +125,7 @@ When both Morgan and Riley are consulted during architecture:
 | CR | bgr-3-create-incident-response | Build runbooks, escalation paths, severity tiers, and postmortem process |
 | IT | bgr-4-incident-triage | Triage a live incident: evidence, severity, hypotheses, mitigation, status updates, hand-off |
 | PM | bgr-4-postmortem | Run a blameless postmortem: verified timeline, contributing factors, owned action items, tickets |
+| HO | bgr-4-oncall-handoff | Prepare an on-call shift handoff: incidents, alerts, changes, open items, acknowledgement |
 | CD | bgr-3-create-disaster-recovery | Define RTO/RPO, failover procedures, and backup strategy |
 | CT | bgr-3-create-resilience-plan | Define steady-state hypotheses, failure scenarios, and game day procedures |
 | CC | bgr-3-create-capacity-plan | Model growth projections against resource limits (collaborative with Riley) |
