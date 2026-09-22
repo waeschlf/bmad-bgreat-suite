@@ -36,6 +36,7 @@ Three specialized agents — **Morgan** (SRE Lead), **Riley** (DevOps Lead), and
 | Create Security Plan | `CS` | Sam | Threat model, security controls, auth strategy, compliance mapping |
 | Operations Review | `OR` | Any agent | Cross-agent consistency review, coverage gaps, staleness checks |
 | **Triage Incident** (live) | `IT` | Morgan | Evidence from observability tools, severity, ranked hypotheses, mitigation, status updates, ticket and postmortem stub |
+| **Run Postmortem** (live) | `PM` | Morgan | Verified timeline and impact, blameless contributing factors, owned action items filed as tickets, published summary |
 
 ### Recommended Workflow Order
 
@@ -52,7 +53,8 @@ Incident Response (CR) --> Resilience Testing (CT)
 
 After any workflows: Operations Review (OR)
 
-During an incident: Triage Incident (IT) -- uses the Incident Response and Observability plans if present
+During an incident: Triage Incident (IT) --> Run Postmortem (PM) --> planning workflows for the gaps found
+                   (uses the Incident Response and Observability plans if present)
 ```
 
 Multiple tracks can run in parallel after the architecture is defined.
@@ -118,6 +120,7 @@ Invoke any workflow by menu code:
 - `CS` — Create Security Plan
 - `OR` — Operations Review
 - `IT` — Triage Incident (live operations)
+- `PM` — Run Postmortem (live operations)
 
 ### Cross-module collaboration
 
@@ -145,6 +148,7 @@ src/
     bgr-3-create-cost-optimization-plan/
     bgr-3-create-security-plan/
     bgr-4-incident-triage/   # Live operations: incident triage
+    bgr-4-postmortem/        # Live operations: blameless postmortem
   skills/
     bgr-ops-review/        # Cross-agent operations review
   templates/               # Shared production readiness checklist

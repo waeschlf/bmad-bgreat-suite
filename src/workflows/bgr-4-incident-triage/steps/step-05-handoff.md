@@ -64,12 +64,12 @@ If the severity meets the postmortem trigger (or the user wants one anyway):
 
 - Copy `../templates/postmortem-stub-template.md` to `{bgr_incidents}/{incident_id}/postmortem.md`
 - Pre-fill summary, timeline, impact, severity, detection lag, mitigation, the hypothesis table, and "runbook existed: yes / no"
-- Leave root cause, contributing factors and action items empty for the blameless postmortem meeting
+- Leave root cause, contributing factors and action items empty for the blameless postmortem (`bgr-4-postmortem`)
 - Record the path in frontmatter `postmortem`
 
 ### 4. Update Operational Context
 
-- If `{bgr_artifacts}/production-readiness-checklist.md` exists, add a row to its "Live Operations Log" section: incident ID, severity, service, record path
+- If `{bgr_artifacts}/production-readiness-checklist.md` exists, add a row to its "Live Operations Log" section: incident ID, severity, service, status, record path, postmortem path (or "pending")
 - List gaps found during triage that belong in planning artifacts (missing runbook, missing alert, flapping or late alert, alert measuring a dependency instead of user impact, SLO not defined, unclear escalation) and recommend the workflow that fixes each (e.g. `bgr-3-create-observability`, `bgr-3-create-incident-response`)
 
 ### 5. Final Summary and Menu
@@ -109,4 +109,4 @@ If the severity meets the postmortem trigger (or the user wants one anyway):
 
 ## NEXT STEP:
 
-Workflow complete. The postmortem is run with the team using `{bgr_incidents}/{incident_id}/postmortem.md`.
+Workflow complete. Run the postmortem with the `bgr-4-postmortem` workflow; it picks up `{bgr_incidents}/{incident_id}/postmortem.md` and this record.

@@ -208,5 +208,5 @@ The following order maximizes context sharing between workflows:
 
 > Incidents triaged with `bgr-4-incident-triage`. Planning gaps found during incidents feed back into section 4.
 
-| Incident | Severity | Service | Status | Record |
-|----------|----------|---------|--------|--------|
+| Incident | Severity | Service | Status | Record | Postmortem |
+|----------|----------|---------|--------|--------|------------|
