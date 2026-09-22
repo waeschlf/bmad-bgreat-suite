@@ -33,7 +33,8 @@ Quantify user impact, classify severity, identify escalation obligations, and ra
 
 From the evidence, state as numbers where possible:
 
-- Affected users, requests or transactions (count or percentage)
+- Affected users, requests or transactions (count or percentage), measured at the **user-facing** layer (server / entry requests), not from dependency-call errors. If the two differ, state both and explain the gap (retries, fallbacks, cached or degraded responses)
+- Whether "successful" user-facing responses might carry degraded or wrong data because a dependency failed behind them; if unknown, say so and ask the owning team
 - Affected user journeys, and whether a workaround exists
 - SLO impact: error budget consumed so far and current burn rate
 - Data integrity or security implications (yes / no / unknown); if yes or unknown, bring in Sam (Security Lead) per the incident response plan
@@ -75,6 +76,7 @@ Build two to five hypotheses. For each:
 Rules:
 
 - A change near onset that touches the affected path is always a hypothesis, even if it looks harmless
+- An error-rate step change between deployed versions (from step 2) supports a deploy hypothesis strongly; a dependency-side cause should affect all versions equally
 - Prefer hypotheses that explain ALL findings, including what is not affected
 - If a fastest test is a read-only query, run it now and update the table
 

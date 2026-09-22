@@ -33,8 +33,9 @@ Build a factual picture of the incident: when it started, what is affected, how 
 
 ### 1. Fix the Time Window
 
-- Incident window: from 60 minutes before `detectedAt` to now
-- Baseline window: same duration, 24 hours earlier (or 7 days earlier for weekly-seasonal traffic)
+- Incident window: from 60 minutes before `detectedAt` to now. If the signal is flapping or the first data already shows errors, widen the window backwards until you reach a quiet period
+- Baseline window: same duration and time of day, **ending before the incident started**. Use 24 hours earlier for short incidents, 7 days earlier for weekly-seasonal traffic, and whole days before onset for incidents lasting more than a day. A baseline that overlaps the incident is invalid
+- Revisit both windows once section 2.4 (onset) is known, and re-run the baseline if onset moved earlier
 - State both windows in UTC in the record
 
 ### 2. Query the Evidence Source
@@ -43,8 +44,10 @@ Use the tools for `{bgr_observability_tool}`. If that tool provides its own skil
 
 | Area | What to establish |
 |------|-------------------|
-| Triggering alert / monitor | Definition, threshold, current state, first trigger time |
+| Triggering alert / monitor | Definition, threshold, current state, first trigger time, number of state changes |
 | Golden signals | Latency (p50/p95/p99), traffic, error rate, saturation; incident vs baseline |
+| User-facing vs dependency | Measure errors and latency at BOTH layers: server / entry spans (what users experience) and client / outbound spans to the failing dependency (what the alert may be counting). They often differ; a dependency can fail heavily while users see little, or the reverse |
+| Error rate by deployed version | Group requests by status and the service version tag. A sharp difference between versions is the strongest evidence of a deploy-induced incident. Tag names differ between tools and span types (e.g. a reserved `version` field may be empty on client spans while a `@version` attribute is set); if grouping returns nothing, inspect one raw span to find the right field |
 | SLO | Current SLI, error budget remaining, burn rate |
 | Errors | Top error messages or exception types by count; first-seen time of new ones |
 | Logs | Error and warning patterns grouped by message; spikes aligned to onset |
@@ -54,6 +57,8 @@ Use the tools for `{bgr_observability_tool}`. If that tool provides its own skil
 | Other active alerts | Anything else firing in the window that may be the same incident |
 
 Start broad (service-level aggregates) and narrow only where the data points. Stop when additional queries no longer change the picture.
+
+If an aggregation returns zero rows although the unfiltered query returns data, the group-by field is probably wrong, not the data absent. Inspect a single raw record, correct the field name, and re-run before concluding anything.
 
 ### 3. Find What Changed
 
@@ -104,6 +109,8 @@ Add timeline entries for onset, each relevant change, and any state change of th
 
 - **Onset:** {time} UTC, {detection lag} before detection
 - **Impact signal:** {key metric incident vs baseline}
+- **User-facing vs dependency:** {server-side error rate} vs {dependency-call error rate}
+- **By version:** {error rate per version, or 'no version difference'}
 - **Scope:** {services / regions / endpoints affected; what is NOT affected}
 - **Changes near onset:** {list or 'none found'}
 - **Notable:** {1-3 findings that stand out}
@@ -125,11 +132,15 @@ Add timeline entries for onset, each relevant change, and any state change of th
 ✅ Changes near onset checked, even if none found
 ✅ Scope includes what is NOT affected
 ✅ Onset estimated from data, not from alert time alone
+✅ Baseline window ends before onset
+✅ Impact measured at the user-facing layer as well as at the failing dependency
+✅ Error rate compared across deployed versions when a deploy is near onset
 
 ## FAILURE MODES:
 
 ❌ Interpreting causes before the evidence is written down
-❌ Comparing incident numbers without a baseline
+❌ Comparing incident numbers without a baseline, or with a baseline that overlaps the incident
+❌ Treating an empty aggregation as "no data" without checking the field name
 ❌ Skipping change detection
 ❌ Copying raw log lines with secrets or PII into the record
 ❌ Running write operations in an evidence step

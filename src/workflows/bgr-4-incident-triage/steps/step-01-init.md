@@ -43,6 +43,12 @@ Extract from the user's message, asking only for what is missing:
 
 If the signal is an alert or incident ID and a matching MCP tool for `{bgr_observability_tool}` or the paging tool is available, fetch the alert or incident details yourself instead of asking.
 
+For an alert, also read its state-change history (alert / warn / recovered events), not just its current status:
+
+- **First observed at** is the earliest trigger of the current episode, not the latest notification. Widen the history window until you find a quiet period before the first trigger
+- **Flapping** (repeated trigger / recover cycles) means the threshold sits at the edge of normal behaviour. Record the number of transitions; the incident may have started long before the alert looked serious, and the alert itself becomes a planning gap for step 5
+- If the current status and the latest event disagree (e.g. status "Alert" but last event "Recovered" days ago), say so and trust the underlying data in step 2 over the alert state
+
 Derive `incident_id`:
 
 - Reuse the external incident ID if one exists (e.g. the paging tool's ID)

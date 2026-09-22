@@ -70,7 +70,7 @@ If the severity meets the postmortem trigger (or the user wants one anyway):
 ### 4. Update Operational Context
 
 - If `{bgr_artifacts}/production-readiness-checklist.md` exists, add a row to its "Live Operations Log" section: incident ID, severity, service, record path
-- List gaps found during triage that belong in planning artifacts (missing runbook, missing alert, SLO not defined, unclear escalation) and recommend the workflow that fixes each (e.g. `bgr-3-create-observability`, `bgr-3-create-incident-response`)
+- List gaps found during triage that belong in planning artifacts (missing runbook, missing alert, flapping or late alert, alert measuring a dependency instead of user impact, SLO not defined, unclear escalation) and recommend the workflow that fixes each (e.g. `bgr-3-create-observability`, `bgr-3-create-incident-response`)
 
 ### 5. Final Summary and Menu
 
